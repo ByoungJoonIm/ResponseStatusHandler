@@ -4,18 +4,42 @@
 
 package handler;
 
-import exceptions.BadRequestException;
-import exceptions.ForbiddenException;
-import exceptions.InternalServerErrorException;
-import exceptions.StatusException;
-import exceptions.UnauthorizedException;
-
 public class ResponseStatusHandler {
+	private static class StatusException extends Exception{
+		public StatusException(String msg){
+			super(msg);
+		}
+	}
+	
+	private static class BadRequestException extends StatusException{
+		public BadRequestException(String msg){
+			super("[400]" + msg);
+		}
+	}
+	
+	private static class ForbiddenException extends StatusException{
+		public ForbiddenException(String msg){
+			super("[403]" + msg);
+		}
+	}
+	
+	private static class InternalServerErrorException extends StatusException{
+		public InternalServerErrorException(String msg){
+			super("[500]" + msg);
+		}
+	}
+	
+	private static class UnauthorizedException extends StatusException{
+		public UnauthorizedException(String msg){
+			super("[401]" + msg);
+		}
+	}
+	
 	private static final String UNDEFIND_MESSAGE = "Á¤ÀÇµÇÁö ¾ÊÀ½";
-	BadRequestException badRequestException = null;
-	ForbiddenException forbiddenException = null;
-	InternalServerErrorException internalServerErrorException = null;
-	UnauthorizedException unauthorizedException = null;
+	private BadRequestException badRequestException = null;
+	private ForbiddenException forbiddenException = null;
+	private InternalServerErrorException internalServerErrorException = null;
+	private UnauthorizedException unauthorizedException = null;
 	
 	/*
 	 * args : "400", "¹º°¡ Àß¸øµÊ", "401", "¹º°¡ ´õ Àß¸øµÊ"
